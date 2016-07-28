@@ -1,0 +1,66 @@
+#+TITLE: windows7下硬盘安装ubuntu
+#+KEYWORDS: windows7 ubuntu 系统安装
+#+AUTHOR: chongliang
+#+DATE: <2016-07-03 日>
+#+EMAIL: 231111669@qq.com
+
+
+
+* 准备工作
+** 准备硬盘空间
+
+   - 一般需要20G以上，长期使用的话，当然是越多越好
+   - windows下可以通过右击“我的电脑”-“管理”-“磁盘”来腾出空间安装。当然，也可以使用分区工具来完成，推荐[[http://www.partition-tool.com/download/epm-trial-download.htm][EaseUS Partition Master]]
+
+** 下载ubuntu镜像文件
+
+   官方网站:[[http://www.ubuntu.com/download]]
+   
+   镜像文件用压缩软件或者虚拟光驱打开，找到casper文件夹，把里面的initrd.lz和vmlinuz解压到C盘，把.disk文件夹也解压到C盘，然后在把整个iso文件复制到C盘
+
+** 下载、安装和设置EasyBCD
+
+   - 下载地址:http://linux.linuxidc.com/
+   - 用户名和密码都是:www.linuxidc.com
+   - 具体下载目录在 /pub/常用工具/EasyBCD 2.2 免费下载/
+   - 安装过程，略
+   - 打开EasyBCD-“添加新条目”-“NeoGurb”-“安装”-“配置”
+   - 在配置文件中，输入如下内容：
+     #+BEGIN_EXAMPLE
+     title Install Ubuntu
+     root (hd0,0)
+     kernel (hd0,0)/vmlinuz.efi boot=casper iso-scan/filename=/ubuntu-16.04.iso ro quiet splash locale=zh_CN.UTF-8
+     initrd (hd0,0)/initrd.lz
+     #+END_EXAMPLE
+     - 其中ubuntu-16.04.iso是ubuntu镜像文件
+     - (hd0,0)指第一个硬盘的第一该分区，即C盘。
+
+* 设置和安装
+
+  - 重启电脑
+  - 启动菜单选“NeoGrub 引导加载器”
+  - 等待后，进入ubuntu
+  - 先打开终端，关闭光驱挂载
+    #+BEGIN_SRC ubuntu
+    sudo umount -l /isodevice
+    #+END_SRC
+  - 然后安装ubuntu
+    - 语言按需求选
+    - 连接网络，wifi或者有线均可（不连网络不影响安装，联网是因为安装的时候会下载语言包，有空再下载也可以）
+    - 第三方软件是否安装，自行按需勾选，我选择了不安装
+    - 安装类型选“其他选项”
+    - 按需求设置分区，我的设置如下：
+     | 分区    | 类型 | 大小     |
+     |---------+------+----------|
+     | /boot   | ext4 | 300M     |
+     | /根目录 | ext4 | 30G      |
+     | /home   | ext4 | 余下所有 |
+     | swap    |      | 2G       |
+    - 按需求设置地区，我选了北京
+    - 其他默认，然后等待安装完成，重启电脑
+    - 能够正常进入ubuntu，即安装成功
+
+* 收尾
+  
+  - 进入windows，删除C盘中的vmlinuz.efi、initrd.lz和镜像文件ubuntu-16.04.iso
+  - 打开EasyBCD-“添加新条目”-“NeoGurb”-“安装”-“删除”

@@ -1,0 +1,17 @@
+#+TITLE: 设置tmp为虚拟硬盘
+#+KEYWORDS: 虚拟硬盘 tmp
+#+AUTHOR: chongliang
+#+DATE: <2016-06-24 五>
+#+EMAIL: 231111669@qq.com
+
+1. 打开fatab设置硬盘挂载
+   #+BEGIN_SRC ubuntu   
+   sudo gedit /etc/fstab
+   #+END_SRC
+   
+2. 设置自动挂载tmp，格式为tmpfs(虚拟硬盘)
+   #+BEGIN_SRC ubuntu
+   tmpfs /tmp tmpfs size=1024m 0 0
+   #+END_SRC
+
+3. 说明：内存分为物理内存(ram)和虚拟内存（swap）。otmpfs建立在内存上，并优先使用物理内存。

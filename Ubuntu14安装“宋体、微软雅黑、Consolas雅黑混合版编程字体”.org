@@ -1,0 +1,34 @@
+#+title: Ubuntu 14 安装 “宋体、微软雅黑、Consolas雅黑混合版编程字体”
+#+author: chongliang
+#+Date:<2016-06-11 六> 
+
+* 使用现成字体文件安装
+
+1. 下载字体文件[[http://pan.baidu.com/s/1nvKpInZ]] （提取密码：9jnt）
+2. 下载后，双击打开，然后点击右上角的安装按钮
+3. 重启系统，字体安装成功。
+4. 字体设置可以通过Unity Tweak Tool来完成（安装：sudo apt-get install unity-tweak-tool）
+
+* 合成混合版变成字体
+
+1. 从 Windows 7 系统下字体文件夹（C:\Windows\Fonts） ，拷贝如下文件到当前Ubuntu用户目录 ～/123
+   1. 宋体 ：simsunb.ttf 和 simsun.ttc
+   2. 微软雅黑 ：msyhbd.ttf 和 simsun.ttc
+   3. Courier New ：courbd.ttf、courbi.ttf、couri.ttf 和 cour.ttf
+2. 新建字体存放目录windows-font
+   #+BEGIN_SRC ubuntu
+   sudo mkdir /usr/share/fonts/truetype/windows-font
+   #+END_SRC
+3. 拷贝字体到wiondow-font目录下
+   #+BEGIN_SRC ubuntu
+   sudo cp /home/snsgou/123/* /usr/share/fonts/truetype/windows-font
+   #+END_SRC
+4. 修改权限，并更新字体缓存
+   #+BEGIN_SRC ubuntu
+   sudo chmod 644  /usr/share/fonts/truetype/windows-font/*
+   sudo mkfontscale
+   sudo mkfontdir
+   sudo fc-cache -fv
+   #+END_SRC
+5. 重启电脑
+   

@@ -1,0 +1,28 @@
+#+TITLE: 修改默认开机系统
+#+KEYWORDS: Ubuntu
+#+AUTHOR: chongliang
+#+DATE: <2016-06-25 六>
+#+EMAIL: 231111669@qq.com
+
+windows下安装ubuntu双系统后，开机默认GRUB由ubuntu引导，因此修改默认开机系统，需要在ubuntu下进行，步骤如下：
+
+1. 打开grub.cfg
+   #+BEGIN_SRC ubuntu
+   sudo vim /boot/grub/grub.cfg
+   #+END_SRC
+2. 修改GRUB_DEFAULT项，该项由0开始，对应系统选择列表中的第一行。ubuntu默认在第一行，而windows默认在第五行，因此：
+   - 如果需要开机默认启动ubuntu
+     #+BEGIN_SRC ubuntu
+     GRUB_DEFAULT=0
+     #+END_SRC
+   - 如果需要开机默认启动windows
+     #+BEGIN_SRC ubuntu
+     GRUB_DEFAULT=4
+     #+END_SRC
+3. 保存退出，然后回到终端，更新GRUB。
+   #+BEGIN_SRC ubuntu
+   sudo update-grub
+   #+END_SRC
+
+参考连接：
+http://blog.sciencenet.cn/blog-560320-768015.h

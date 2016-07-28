@@ -1,0 +1,35 @@
+#+TITLE: Rmarkdown编辑环境设置
+#+KEYWORDS: R markdown emacs polymode
+#+AUTHOR: chongliang
+#+DATE: <2016-06-21 二>
+#+EMAIL: 231111669@qq.com
+
+* 终端下安装markdown包
+  
+#+BEGIN_SRC ubuntu
+sudo apt-get install emacs-goodies-el
+#+END_SRC
+
+* Emacs中安装polymode
+
+#+BEGIN_SRC Emacs
+package-install
+polymode
+#+END_SRC
+
+* 编辑~/.emacs
+
+#+BEGIN_SRC Emacs
+;;; Markdown mode
+(autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
+(setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.ronn?" . markdown-mode) auto-mode-alist))
+
+;;; Polymode
+(setq load-path (append '("/path/to/polymode/") load-path))
+
+(require 'poly-R)
+(require 'poly-markdown)
+(add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
+#+END_SRC

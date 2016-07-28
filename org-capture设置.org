@@ -1,0 +1,65 @@
+#+TITLE: org-capture设置
+#+KEYWORDS: ORG GTD capture
+#+AUTHOR: chongliang
+#+DATE: <2016-06-26 日>
+#+EMAIL: 231111669@qq.com
+
+Emacs24.5中，原org-remember的功能由org-capture代替，相应地，在设置上也
+有一些变化，网络上关于ore-remember的设置教程多数已经不适合了。这里提供
+
+org-capture的设置简介：
+
+org-capture已经默认调用了，不过，作为一个快速记录想法、任务的功能，它必须要快：
+
+1. 设置一个全局快捷键来打开它：
+   #+BEGIN_SRC elisp
+(global-set-key (kbd "<f2>") 'open-init-file)
+   #+END_SRC
+
+2. 设置模板，便于快速输入，同时，还要将任务、想法快速分类归纳到相应的文件中，这是我的设定：
+   #+BEGIN_SRC elisp
+(setq org-capture-templates
+      '(("wt" "Work-Tasks-TODO"     entry (file+headline "~/GTD/Work.org" "Tasks")     "* TODO %?\n  %i\n  %T")
+	("ht" "Home-Tasks-TODO"     entry (file+headline "~/GTD/Home.org" "Tasks")     "* TODO %?\n  %i\n  %T")
+	("ft" "Finacy-Tasks-TODO"   entry (file+headline "~/GTD/Finacy.org" "Tasks")   "* TODO %?\n  %i\n  %T")
+	("pt" "Personal-Tasks-TODO" entry (file+headline "~/GTD/Personal.org" "Tasks")  "* TODO %?\n  %i\n  %T")
+	("ct" "Computer-Tasks-TODO" entry (file+headline "~/GTD/Computer.org" "Tasks") "* TODO %?\n  %i\n  %T")
+	))
+   #+END_SRC
+
+3. 模板设定参数详见[[https://www.gnu.org/software/emacs/manual/html_mono/org.html#Templates-in-contexts][org-menual第九章]] ，这里作一个简单介绍。模板设置的格式为：
+   #+BEGIN_SRC elisp
+   (setq org-capture-template '(key description type (target) template properties))
+   #+END_SRC
+
+   - key项用于设置快捷键
+
+   - description项用于描述模板
+
+   - type项用于设定capture的类型
+
+   - target项用于设定capture的目标，如某文件某父节点
+
+   - template项用于设定模板，当中，包含[[https://www.gnu.org/software/emacs/manual/html_mono/org.html#Template-elements][Template elements]]、[[https://www.gnu.org/software/emacs/manual/html_mono/org.html#Template-expansion][Template expansion]]和[[https://www.gnu.org/software/emacs/manual/html_mono/org.html#Templates-in-contexts][Templates in contexts]]
+
+   - properties项用于设定其他需求，如加入空行、记时等
+
+例子：
+   #+BEGIN_SRC elisp
+	("ht" "Home-Tasks-TODO"      entry (file+headline "~/GTD/Home.org" "Tasks") "* TODO %?\n  %i\n  %T")
+   #+END_SRC
+
+   - *"ht"*是key项参数，按[F12]后在按ht即完成模板调用
+
+   - *"Home-Tasks-TODO"*是description项参数，标识这个是家庭事务的TODO模板
+
+   - *entry*是type项参数，代表将带有headline的内容写进org文件（必须是
+     org文件），还有其他参数，如：item、checkitem、table-line、plain
+
+   - *(file+headline "~/GTD/Home.org" "Tasks")*是target项参数，
+     *file+headline*设定将capture插入到某文件中的某父节点下，
+     "~/GTD/Home.org"为文件及其路径， "Tasks"为父节点。整个设定为将
+     capture插入到~/GTD/Home.org中的Tasks节点下。
+
+   - *"* TODO %?\n %i\n %T"*为template项，"%?"为模板调用后光标的位置，
+     "%i"为所输入的字符，%T插入当前日期和时间（%t仅插入日期）

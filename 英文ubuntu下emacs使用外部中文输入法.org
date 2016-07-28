@@ -1,0 +1,23 @@
+#+TITLE: 英文ubuntu下emacs使用外部中文输入法
+#+AUTHOR: Chongliang
+#+DATE:<2016-07-25 一>
+#+KEYWORDS: ubuntu 英文版 emcas 输入法
+
+1. 方法一：临时使用中文输入法
+   #+BEGIN_SRC emacs-lisp
+     LC_CTYPE=zh_CN.UTF-8 emacs
+   #+END_SRC
+注意，这时候，emacs的范围选择健“C-SPe”，由"C-@"代替
+2. 方法二：全局可以使用中文输入法
+   - 查看当前系统语言环境
+     #+BEGIN_SRC emacs-lisp
+       locale
+     #+END_SRC
+   - 如果LC_CTYPE这项不是zh_CN.UTF-8的话（字符集）修改之：
+     #+BEGIN_SRC emacs-lisp
+       sudo gedit /etc/environment
+       添加一行：
+       LC_CTYPE="zh_CN.UTF-8"
+     #+END_SRC
+   - 重启生效，注意事项同上
+3. 总结，通过修改字符集的设定，来实现在emacs中使用外部中文输入法。
