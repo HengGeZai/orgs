@@ -1,0 +1,28 @@
+#+TITLE: Ubuntu安装EPSON L360驱动
+#+AUTHOR: Chongliang
+#+DATE: <2016-08-04 四>
+#+KEYWORDS: Ubuntu 驱动 打印机 EPSON L360
+
+
+* 安装方法一：
+  1. 安装依赖包
+     #+BEGIN_SRC
+       sudo apt-get install lsb
+     #+END_SRC
+  2. 下载并双击安装[[http://download.ebz.epson.net/dsc/du/02/DriverDownloadInfo.do?LG2%3DEN&CN2%3D&DSCMI%3D34541&DSCCHK%3D141ba614c212ead0099d27f8dc8f2bc35faf7781][Printer Driver  ESC/P Driver (full feature)]]
+  3. 打开printers，并新增打印机，选择EPSON L360
+  4. 选择安装：[[http://download.ebz.epson.net/dsc/du/02/DriverDownloadInfo.do?LG2%3DEN&CN2%3D&DSCMI%3D45429&DSCCHK%3Deaf97ae6689ee7a594faa68cb24949fb6569b055][Printer Driver  Epson Printer Utility]]
+
+* 安装方法二：
+  终端下输入如下指令：
+  #+BEGIN_SRC emacs-lisp
+    sudo apt-get install lsb
+    sudo apt-get install gdebi
+    sudo gdebi ~/Downloads/epson-inkjet-printer-escpr*.deb
+    sudo gdebi ~/Downloads/epson-printer-utility*.deb
+  #+END_SRC
+  
+  然后打开printers，并新增打印机，选择EPSON L360
+
+* 参考：
+  http://tutorialforlinux.com/2016/02/07/how-to-install-epson-l360l362l365l366-printer-driver-software-utility-on-ubuntu-linux-2/
